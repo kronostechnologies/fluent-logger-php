@@ -1,0 +1,8 @@
+version: "1.0"
+linter: jetbrains/qodana-php:2023.3-eap
+
+script:
+  name: php-migration
+  parameters:
+    fromLevel: 5.6
+    toLevel: 8.4
