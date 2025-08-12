@@ -1,8 +1,8 @@
-builds
+.project
+.DS_Store
+/vendor
 .idea
-docs
-phpunit.xml
-tmp/
-*.iml
-composer.lock
-vendor
+
+# phpunit
+.phpunit.result.cache
+.phpunit.cache/
