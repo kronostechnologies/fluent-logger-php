@@ -2,29 +2,51 @@
 /**
  */
 
-namespace FluentTests\FluentLogger;
+namespace Fluent\Logger;
 
-use Fluent\Logger;
-use Fluent\Logger\FluentLogger;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
 
 function fluentTests_FluentLogger_DummyFunction()
 {
 }
 
-class BaseLoggerTest extends \PHPUnit_Framework_TestCase
+class BaseLoggerTest extends TestCase
 {
-    /**
-     * testing compatible before and after
-     *
-     * @dataProvider errorHandlerProvider
-     */
-    public function testRegisterErrorHandler($eh)
+    #[Test]
+    public function testRegisterErrorHandler()
     {
-        $base = $this->getMockForAbstractClass('Fluent\Logger\FluentLogger');
-        $this->assertTrue($base->registerErrorHandler($eh));
+        $errorHandler = $this->getErrorHandlerProvider();
+
+        $base = $this->createMock(FluentLogger::class);
+        $this->assertTrue($base->registerErrorHandler($errorHandler));
     }
 
-    public function errorHandlerProvider()
+    #[Test]
+    public function testRegisterInvalidErrorHandler()
+    {
+        $errorHandler = $this->getInvalidErrorHandlerProvider();
+
+        $base = $this->createMock(FluentLogger::class);
+        $this->expectException(\InvalidArgumentException::class);
+        $base->registerErrorHandler($errorHandler);
+    }
+
+    #[Test]
+    public function testUnregisterErrorHandler()
+    {
+        $base = $this->createMock(FluentLogger::class);
+        $prop = new \ReflectionProperty($base, 'error_handler');
+        $prop->setAccessible(true);
+
+        $base->registerErrorHandler(function() {});
+        $this->assertNotNull($prop->getValue($base));
+
+        $base->unregisterErrorHandler();
+        $this->assertNull($prop->getValue($base));
+    }
+
+    private function getErrorHandlerProvider()
     {
         return array(
             array(
@@ -40,17 +62,7 @@ class BaseLoggerTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * @dataProvider invalidErrorHandlerProvider
-     * @expectedException InvalidArgumentException
-     */
-    public function testRegisterInvalidErrorHandler($eh)
-    {
-        $base = $this->getMockForAbstractClass('Fluent\Logger\FluentLogger');
-        $base->registerErrorHandler($eh);
-    }
-
-    public function invalidErrorHandlerProvider()
+    private function getInvalidErrorHandlerProvider()
     {
         return array(
             array(
@@ -63,16 +75,5 @@ class BaseLoggerTest extends \PHPUnit_Framework_TestCase
                 array($this, 'errorHandlerProvider_Invalid', 'hoge') // invalid
             ),
         );
-    }
-
-    public function testUnregisterErrorHandler()
-    {
-        $base = $this->getMockForAbstractClass('Fluent\Logger\FluentLogger');
-        $prop = new \ReflectionProperty($base, 'error_handler');
-        $prop->setAccessible(true);
-        $base->registerErrorHandler(function() {});
-        $this->assertNotNull($prop->getValue($base));
-        $base->unregisterErrorHandler();
-        $this->assertNull($prop->getValue($base));
     }
 }

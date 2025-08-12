@@ -1,10 +1,11 @@
 <?php
-namespace FluentTests\Logger;
+namespace Fluent\Logger;
 
-use Fluent\Logger\Entity;
-use Fluent\Logger\JsonPacker;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
 
-class JsonPackerTest extends \PHPUnit_Framework_TestCase
+class JsonPackerTest extends TestCase
 {
     const TAG           = "debug.test";
     const EXPECTED_TIME = 123456789;
@@ -12,7 +13,7 @@ class JsonPackerTest extends \PHPUnit_Framework_TestCase
     protected $time;
     protected $expected_data = array();
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->expected_data = array("abc" => "def");
     }
@@ -33,25 +34,22 @@ class JsonPackerTest extends \PHPUnit_Framework_TestCase
         return json_decode($result, true);
     }
 
-    /**
-     * @depends testPack
-     */
+    #[Test]
+    #[Depends('testPack')]
     public function testPackReturnTag($result)
     {
         $this->assertEquals($result['0'], self::TAG);
     }
 
-    /**
-     * @depends testPack
-     */
+    #[Test]
+    #[Depends('testPack')]
     public function testPackReturnTime($result)
     {
         $this->assertEquals($result['1'], self::EXPECTED_TIME);
     }
 
-    /**
-     * @depends testPack
-     */
+    #[Test]
+    #[Depends('testPack')]
     public function testPackReturnData($result)
     {
         $this->assertEquals($result['2'], $this->expected_data);

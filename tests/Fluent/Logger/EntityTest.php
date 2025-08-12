@@ -1,9 +1,9 @@
 <?php
-namespace FluentTests\Logger;
+namespace Fluent\Logger;
 
-use Fluent\Logger\Entity;
+use PHPUnit\Framework\TestCase;
 
-class EntityTest extends \PHPUnit_Framework_TestCase
+class EntityTest extends TestCase
 {
     const TAG = "debug.test";
 
