@@ -16,26 +16,30 @@ class BaseLoggerTest extends TestCase
     #[Test]
     public function testRegisterErrorHandler()
     {
-        $errorHandler = $this->getErrorHandlerProvider();
+        $testCases = $this->getErrorHandlerProviders();
 
-        $base = $this->createMock(FluentLogger::class);
-        $this->assertTrue($base->registerErrorHandler($errorHandler));
+        foreach ($testCases as $description => $errorHandler) {
+            $base = new FluentLogger("localhost");
+            $this->assertTrue($base->registerErrorHandler($errorHandler), "Failed for: " . $description);
+        }
     }
 
     #[Test]
     public function testRegisterInvalidErrorHandler()
     {
-        $errorHandler = $this->getInvalidErrorHandlerProvider();
+        $testCases = $this->getInvalidErrorHandlerProviders();
 
-        $base = $this->createMock(FluentLogger::class);
-        $this->expectException(\InvalidArgumentException::class);
-        $base->registerErrorHandler($errorHandler);
+        foreach ($testCases as $description => $errorHandler) {
+            $this->expectException(\InvalidArgumentException::class);
+            $base = new FluentLogger("localhost");
+            $this->assertTrue($base->registerErrorHandler($errorHandler));
+        }
     }
 
     #[Test]
     public function testUnregisterErrorHandler()
     {
-        $base = $this->createMock(FluentLogger::class);
+        $base = new FluentLogger("localhost");
         $prop = new \ReflectionProperty($base, 'error_handler');
         $prop->setAccessible(true);
 
@@ -46,34 +50,22 @@ class BaseLoggerTest extends TestCase
         $this->assertNull($prop->getValue($base));
     }
 
-    private function getErrorHandlerProvider()
+    public function getErrorHandlerProviders(): array
     {
-        return array(
-            array(
-                'FluentTests\FluentLogger\fluentTests_FluentLogger_DummyFunction'
-            ),
-            array(
-                array($this, 'errorHandlerProvider')
-            ),
-            array(
-                function () {
-                }, // closure
-            ),
-        );
+        return [
+            'Fluent\Logger\fluentTests_FluentLogger_DummyFunction',
+            array($this, 'getErrorHandlerProviders'),
+            function () {
+            }, // closure
+        ];
     }
 
-    private function getInvalidErrorHandlerProvider()
+    public function getInvalidErrorHandlerProviders(): array
     {
         return array(
-            array(
-                null,
-            ),
-            array(
-                array($this, 'errorHandlerProvider_Invalid') // not exists
-            ),
-            array(
-                array($this, 'errorHandlerProvider_Invalid', 'hoge') // invalid
-            ),
+            null,
+            array($this, 'errorHandlerProvider_Invalid'), // not exists
+            array($this, 'errorHandlerProvider_Invalid', 'hoge') // invalid
         );
     }
 }

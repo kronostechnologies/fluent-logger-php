@@ -7,4 +7,4 @@ setup:
 
 .PHONY: test
 test:
-	@./vendor/bin/phpunit
+	@./vendor/bin/phpunit --coverage-clover=reports/clover.xml
