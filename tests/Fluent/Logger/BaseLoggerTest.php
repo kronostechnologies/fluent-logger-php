@@ -2,77 +2,70 @@
 /**
  */
 
-namespace FluentTests\FluentLogger;
+namespace Fluent\Logger;
 
-use Fluent\Logger;
-use Fluent\Logger\FluentLogger;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
 
 function fluentTests_FluentLogger_DummyFunction()
 {
 }
 
-class BaseLoggerTest extends \PHPUnit_Framework_TestCase
+class BaseLoggerTest extends TestCase
 {
-    /**
-     * testing compatible before and after
-     *
-     * @dataProvider errorHandlerProvider
-     */
-    public function testRegisterErrorHandler($eh)
+    #[Test]
+    public function testRegisterErrorHandler()
     {
-        $base = $this->getMockForAbstractClass('Fluent\Logger\FluentLogger');
-        $this->assertTrue($base->registerErrorHandler($eh));
+        $testCases = $this->getErrorHandlerProviders();
+
+        foreach ($testCases as $description => $errorHandler) {
+            $base = new FluentLogger("localhost");
+            $this->assertTrue($base->registerErrorHandler($errorHandler), "Failed for: " . $description);
+        }
     }
 
-    public function errorHandlerProvider()
+    #[Test]
+    public function testRegisterInvalidErrorHandler()
     {
-        return array(
-            array(
-                'FluentTests\FluentLogger\fluentTests_FluentLogger_DummyFunction'
-            ),
-            array(
-                array($this, 'errorHandlerProvider')
-            ),
-            array(
-                function () {
-                }, // closure
-            ),
-        );
+        $testCases = $this->getInvalidErrorHandlerProviders();
+
+        foreach ($testCases as $description => $errorHandler) {
+            $this->expectException(\InvalidArgumentException::class);
+            $base = new FluentLogger("localhost");
+            $this->assertTrue($base->registerErrorHandler($errorHandler));
+        }
     }
 
-    /**
-     * @dataProvider invalidErrorHandlerProvider
-     * @expectedException InvalidArgumentException
-     */
-    public function testRegisterInvalidErrorHandler($eh)
-    {
-        $base = $this->getMockForAbstractClass('Fluent\Logger\FluentLogger');
-        $base->registerErrorHandler($eh);
-    }
-
-    public function invalidErrorHandlerProvider()
-    {
-        return array(
-            array(
-                null,
-            ),
-            array(
-                array($this, 'errorHandlerProvider_Invalid') // not exists
-            ),
-            array(
-                array($this, 'errorHandlerProvider_Invalid', 'hoge') // invalid
-            ),
-        );
-    }
-
+    #[Test]
     public function testUnregisterErrorHandler()
     {
-        $base = $this->getMockForAbstractClass('Fluent\Logger\FluentLogger');
+        $base = new FluentLogger("localhost");
         $prop = new \ReflectionProperty($base, 'error_handler');
         $prop->setAccessible(true);
+
         $base->registerErrorHandler(function() {});
         $this->assertNotNull($prop->getValue($base));
+
         $base->unregisterErrorHandler();
         $this->assertNull($prop->getValue($base));
+    }
+
+    public function getErrorHandlerProviders(): array
+    {
+        return [
+            'Fluent\Logger\fluentTests_FluentLogger_DummyFunction',
+            array($this, 'getErrorHandlerProviders'),
+            function () {
+            }, // closure
+        ];
+    }
+
+    public function getInvalidErrorHandlerProviders(): array
+    {
+        return array(
+            null,
+            array($this, 'errorHandlerProvider_Invalid'), // not exists
+            array($this, 'errorHandlerProvider_Invalid', 'hoge') // invalid
+        );
     }
 }
