@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="6.13.1@1e3b7f0a8ab32b23197b91107adc0a7ed8a05b51">
+  <file src="src/Entity.php">
+    <ClassMustBeFinal>
+      <code><![CDATA[Entity]]></code>
+    </ClassMustBeFinal>
+    <DocblockTypeContradiction>
+      <code><![CDATA[is_null($time)]]></code>
+    </DocblockTypeContradiction>
+    <InvalidCast>
+      <code><![CDATA[$time]]></code>
+    </InvalidCast>
+    <MissingParamType>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$tag]]></code>
+    </MissingParamType>
+    <MissingPropertyType>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$tag]]></code>
+      <code><![CDATA[$time]]></code>
+    </MissingPropertyType>
+  </file>
+  <file src="src/Exception.php">
+    <ClassMustBeFinal>
+      <code><![CDATA[Exception]]></code>
+    </ClassMustBeFinal>
+    <MissingPropertyType>
+      <code><![CDATA[$entity]]></code>
+    </MissingPropertyType>
+  </file>
+  <file src="src/FluentLogger.php">
+    <ClassMustBeFinal>
+      <code><![CDATA[FluentLogger]]></code>
+    </ClassMustBeFinal>
+    <InvalidArgument>
+      <code><![CDATA["could not send entities"]]></code>
+      <code><![CDATA[$e->getMessage()]]></code>
+      <code><![CDATA[$e->getMessage()]]></code>
+      <code><![CDATA[$error]]></code>
+      <code><![CDATA[false]]></code>
+      <code><![CDATA[false]]></code>
+      <code><![CDATA[self::BACKOFF_TYPE_EXPONENTIAL]]></code>
+      <code><![CDATA[self::CONNECTION_TIMEOUT]]></code>
+      <code><![CDATA[self::MAX_WRITE_RETRY]]></code>
+      <code><![CDATA[self::SOCKET_TIMEOUT]]></code>
+      <code><![CDATA[self::USLEEP_WAIT]]></code>
+      <code><![CDATA[true]]></code>
+    </InvalidArgument>
+    <InvalidDocblockParamName>
+      <code><![CDATA[$data]]></code>
+    </InvalidDocblockParamName>
+    <InvalidOperand>
+      <code><![CDATA[pow($base, $attempt) * 1000]]></code>
+    </InvalidOperand>
+    <InvalidScalarArgument>
+      <code><![CDATA[pow($base, $attempt) * 1000]]></code>
+    </InvalidScalarArgument>
+    <MissingClassConstType>
+      <code><![CDATA[BACKOFF_TYPE_EXPONENTIAL = 0x01]]></code>
+      <code><![CDATA[BACKOFF_TYPE_USLEEP      = 0x02]]></code>
+      <code><![CDATA[CONNECTION_TIMEOUT = 3]]></code>
+      <code><![CDATA[DEFAULT_ADDRESS     = "127.0.0.1"]]></code>
+      <code><![CDATA[DEFAULT_LISTEN_PORT = 24224]]></code>
+      <code><![CDATA[MAX_WRITE_RETRY    = 5]]></code>
+      <code><![CDATA[SOCKET_TIMEOUT     = 3]]></code>
+      <code><![CDATA[USLEEP_WAIT = 1000]]></code>
+    </MissingClassConstType>
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function post($tag, array $data)]]></code>
+      <code><![CDATA[public function post2(Entity $entity)]]></code>
+    </MissingOverrideAttribute>
+    <MissingParamType>
+      <code><![CDATA[$attempt]]></code>
+      <code><![CDATA[$base]]></code>
+      <code><![CDATA[$buffer]]></code>
+      <code><![CDATA[$host]]></code>
+      <code><![CDATA[$key]]></code>
+      <code><![CDATA[$port]]></code>
+    </MissingParamType>
+    <MissingPropertyType>
+      <code><![CDATA[$acceptable_options]]></code>
+      <code><![CDATA[$error_handler]]></code>
+      <code><![CDATA[$host]]></code>
+      <code><![CDATA[$instances]]></code>
+      <code><![CDATA[$options]]></code>
+      <code><![CDATA[$packer]]></code>
+      <code><![CDATA[$port]]></code>
+      <code><![CDATA[$socket]]></code>
+      <code><![CDATA[$supported_transports]]></code>
+      <code><![CDATA[$this->options]]></code>
+      <code><![CDATA[$transport]]></code>
+    </MissingPropertyType>
+    <MissingReturnType>
+      <code><![CDATA[backoffExponential]]></code>
+      <code><![CDATA[connect]]></code>
+      <code><![CDATA[defaultErrorHandler]]></code>
+      <code><![CDATA[mergeOptions]]></code>
+      <code><![CDATA[processError]]></code>
+      <code><![CDATA[setOptions]]></code>
+    </MissingReturnType>
+    <PossiblyFalseArgument>
+      <code><![CDATA[json_encode($entity->getData())]]></code>
+    </PossiblyFalseArgument>
+    <RedundantConditionGivenDocblockType>
+      <code><![CDATA[is_callable($callable)]]></code>
+    </RedundantConditionGivenDocblockType>
+    <ReservedWord>
+      <code><![CDATA[void]]></code>
+      <code><![CDATA[void]]></code>
+    </ReservedWord>
+  </file>
+  <file src="src/JsonPacker.php">
+    <ClassMustBeFinal>
+      <code><![CDATA[JsonPacker]]></code>
+    </ClassMustBeFinal>
+    <FalsableReturnStatement>
+      <code><![CDATA[json_encode(array($entity->getTag(), $entity->getTime(), $entity->getData()))]]></code>
+    </FalsableReturnStatement>
+    <InvalidFalsableReturnType>
+      <code><![CDATA[string]]></code>
+    </InvalidFalsableReturnType>
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function pack(Entity $entity)]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="src/LoggerInterface.php">
+    <MissingReturnType>
+      <code><![CDATA[post]]></code>
+      <code><![CDATA[post2]]></code>
+    </MissingReturnType>
+  </file>
+  <file src="src/PackerInterface.php">
+    <MissingReturnType>
+      <code><![CDATA[pack]]></code>
+    </MissingReturnType>
+  </file>
+</files>
