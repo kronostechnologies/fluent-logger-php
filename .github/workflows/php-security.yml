@@ -15,4 +15,4 @@ jobs:
     with:
       publish-reports: true
       php-version: '8.4'
-      extensions: gearman, pcov
+      extensions: pcov

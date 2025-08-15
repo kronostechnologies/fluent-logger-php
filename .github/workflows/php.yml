@@ -15,4 +15,4 @@ jobs:
     with:
       checks: phpunit
       php-version: '8.4'
-      extensions: gearman, pcov
+      extensions: pcov
