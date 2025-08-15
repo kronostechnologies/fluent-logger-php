@@ -1,9 +1,9 @@
 {
-  "name": "fluent/logger",
+  "name": "equisoft/fluent-logger-php",
   "type": "library",
-  "description": "a logging library for Fluentd",
+  "description": "A logging library for Fluentd",
   "keywords": ["log", "logging"],
-  "homepage": "http://github.com/fluent/fluent-logger-php",
+  "homepage": "https://github.com/kronostechnologies/fluent-logger-php",
   "license": "Apache",
   "authors": [
     {
@@ -17,6 +17,10 @@
     {
       "name": "DQNEO",
       "email": "dqneoo@gmail.com"
+    },
+    {
+      "name": "Toby Daigle",
+      "email": "toby.daigle@equisoft.com"
     }
   ],
   "config": {
