@@ -2,11 +2,12 @@
 
 **fluent-logger-php** is a PHP library to record events to fluentd from a PHP application.
 
-[![Build Status](https://secure.travis-ci.org/fluent/fluent-logger-php.png)](http://travis-ci.org/fluent/fluent-logger-php)
+## Docs
+See [ADRs](./docs/adr)
 
 ## Requirements
 
-- PHP 5.6 or higher
+- PHP 8.4 or higher
 - fluentd v0.9.20 or higher
 
 ## Installation
@@ -17,17 +18,19 @@ composer.json
 
 ```json
 {
+
+    "repositories": [
+        {
+          "name": "equisoft/fluent-logger-php",
+          "type": "vcs",
+          "url": "https://github.com/kronostechnologies/fluent-logger-php.git"
+        }
+    ],
     "require": {
-        "fluent/logger": "v1.0.0"
+        "equisoft/fluent-logger-php": "1.0.0"
     }
 }
 ```
-
-# Backward Compatibility Changes
-
-As of v1, all loggers but `FluentLogger` are removed.
-
-[Monolog](https://github.com/Seldaek/monolog) is recommended in such use cases.
 
 # Usage
 
@@ -62,7 +65,7 @@ Use `in_forward`.
 
 * Buffering and re-send support
 
-PHP does not have threads. So, I strongaly recommend you use fluentd as a local fluent proxy.
+PHP does not have threads. So, I strongly recommend you use fluentd as a local fluent proxy.
 
 ````
 apache2(mod_php)
